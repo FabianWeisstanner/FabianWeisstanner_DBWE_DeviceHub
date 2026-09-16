@@ -41,13 +41,24 @@ if not database_url:
         raise RuntimeError("DATABASE_URL ist nicht gesetzt.")
 
 
+database_url = os.environ.get("DATABASE_URL")
+
+if not database_url:
+    raise RuntimeError("DATABASE_URL ist nicht gesetzt.")
+
+
 app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_pre_ping": True,
+    "pool_recycle": 300,
+}
+
 app.config["SECRET_KEY"] = os.environ.get(
-        "SECRET_KEY",
-        "devicehub-development-key"
-    )
+    "SECRET_KEY",
+    "devicehub-development-key"
+)
 
 
 db.init_app(app)
