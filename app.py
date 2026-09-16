@@ -222,6 +222,101 @@ def devices():
             devices=all_devices
         )
 
+@app.route("/devices/add", methods=["GET", "POST"])
+@login_required
+def add_device():
+        if request.method == "POST":
+            device_name = request.form.get(
+                "device_name",
+                ""
+            ).strip()
+
+            manufacturer = request.form.get(
+                "manufacturer",
+                ""
+            ).strip()
+
+            model = request.form.get(
+                "model",
+                ""
+            ).strip()
+
+            serial_number = request.form.get(
+                "serial_number",
+                ""
+            ).strip()
+
+            operating_system = request.form.get(
+                "operating_system",
+                ""
+            ).strip()
+
+            device_type = request.form.get(
+                "device_type",
+                ""
+            ).strip()
+
+            owner = request.form.get(
+                "owner",
+                ""
+            ).strip()
+
+            status = request.form.get(
+                "status",
+                ""
+            ).strip()
+
+            if not device_name or not serial_number or not status:
+                flash(
+                    "Gerätename, Seriennummer und Status "
+                    "sind Pflichtfelder."
+                )
+
+                return redirect(
+                    url_for("add_device")
+                )
+
+            existing_device = Device.query.filter_by(
+                serial_number=serial_number
+            ).first()
+
+            if existing_device:
+                flash(
+                    "Ein Gerät mit dieser Seriennummer "
+                    "ist bereits vorhanden."
+                )
+
+                return redirect(
+                    url_for("add_device")
+                )
+
+            device = Device(
+                device_name=device_name,
+                manufacturer=manufacturer,
+                model=model,
+                serial_number=serial_number,
+                operating_system=operating_system,
+                device_type=device_type,
+                owner=owner,
+                status=status,
+                created_by=current_user.id
+            )
+
+            db.session.add(device)
+            db.session.commit()
+
+            flash(
+                "Gerät wurde erfolgreich gespeichert."
+            )
+
+            return redirect(
+                url_for("devices")
+            )
+
+        return render_template(
+            "device_add.html"
+        )
+
 
 if __name__ == "__main__":
             port = int(

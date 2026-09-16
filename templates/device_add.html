@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>DeviceHub - Gerät erfassen</title>
+</head>
+<body>
+
+    <h1>Neues Gerät erfassen</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+
+        <label for="device_name">Gerätename *</label><br>
+        <input
+            type="text"
+            id="device_name"
+            name="device_name"
+            required
+        >
+        <br><br>
+
+        <label for="manufacturer">Hersteller</label><br>
+        <input
+            type="text"
+            id="manufacturer"
+            name="manufacturer"
+        >
+        <br><br>
+
+        <label for="model">Modell</label><br>
+        <input
+            type="text"
+            id="model"
+            name="model"
+        >
+        <br><br>
+
+        <label for="serial_number">Seriennummer *</label><br>
+        <input
+            type="text"
+            id="serial_number"
+            name="serial_number"
+            required
+        >
+        <br><br>
+
+        <label for="operating_system">Betriebssystem</label><br>
+        <input
+            type="text"
+            id="operating_system"
+            name="operating_system"
+        >
+        <br><br>
+
+        <label for="device_type">Gerätetyp</label><br>
+        <input
+            type="text"
+            id="device_type"
+            name="device_type"
+        >
+        <br><br>
+
+        <label for="owner">Besitzer</label><br>
+        <input
+            type="text"
+            id="owner"
+            name="owner"
+        >
+        <br><br>
+
+        <label for="status">Status *</label><br>
+
+        <select
+            id="status"
+            name="status"
+            required
+        >
+            <option value="">Bitte auswählen</option>
+            <option value="Active">Active</option>
+            <option value="In Stock">In Stock</option>
+            <option value="Repair">Repair</option>
+            <option value="Retired">Retired</option>
+        </select>
+
+        <br><br>
+
+        <button type="submit">
+            Gerät speichern
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="/devices">
+        Zurück zur Geräteübersicht
+    </a>
+
+</body>
+</html>
