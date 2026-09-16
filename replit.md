@@ -1,45 +1,41 @@
-# [Project name]
+# DeviceHub
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+DeviceHub is a minimal Flask application that shows the service status page.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `python3 app.py` — run DeviceHub on `0.0.0.0` using the configured `PORT` value
+- `python3 -m compileall app.py` — check the Python entrypoint syntax
+- `python3 -m pip install -r requirements.txt` — install the Flask dependency
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Python 3.9+
+- Flask
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `app.py` — Flask entrypoint and the single `/` route
+- `templates/index.html` — the DeviceHub status page
+- `requirements.txt` — Python dependency declaration
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The first version intentionally has no database, authentication, persistence, or REST API.
+- Flask serves the status page directly so no frontend build or JavaScript runtime is required.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+The app currently displays the DeviceHub service status message `DeviceHub läuft`.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+No additional preferences recorded.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- The server must bind to `0.0.0.0` and use `PORT` for Replit preview and deployment access.
 
 ## Pointers
 
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- Keep future work scoped to the Flask application until database, authentication, or API requirements are explicitly added.

@@ -1,0 +1,1 @@
+- [Artifact service working directory](artifact-service-working-directory.md) — managed artifact commands run from the artifact directory, not the workspace root.

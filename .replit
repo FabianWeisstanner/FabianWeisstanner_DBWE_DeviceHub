@@ -1,20 +1,15 @@
-modules = ["nodejs-24"]
+modules = ["python-3.11"]
 
 [deployment]
 router = "application"
 deploymentTarget = "autoscale"
-
-[deployment.postBuild]
-args = ["pnpm", "store", "prune"]
-env = { "CI" = "true" }
+run = ["python3", "app.py"]
 
 [workflows]
 runButton = "Project"
 
 [agent]
-stack = "PNPM_WORKSPACE"
 expertMode = true
 
-[postMerge]
-path = "scripts/post-merge.sh"
-timeoutMs = 20000
+[nix]
+channel = "stable-25_05"

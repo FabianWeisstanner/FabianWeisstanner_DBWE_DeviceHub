@@ -1,7 +1,7 @@
 kind = "web"
 previewPath = "/"
 title = "DeviceHub"
-description = "A minimal DeviceHub start page that displays the German status message DeviceHub läuft. No database, authentication, or API included."
+description = "A minimal DeviceHub Flask status page that displays the German status message DeviceHub läuft. No database, authentication, or API included."
 version = "1.0.0"
 id = "artifacts/devicehub"
 router = "path"
@@ -12,17 +12,10 @@ paths = [ "/" ]
 localPort = 19211
 
 [services.development]
-run = "pnpm --filter @workspace/devicehub run dev"
+run = "python3 ../../app.py"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/devicehub", "run", "build" ]
-serve = "static"
-publicDir = "artifacts/devicehub/dist/public"
-
-[[services.production.rewrites]]
-from = "/*"
-to = "/index.html"
+run = "python3 ../../app.py"
 
 [services.env]
 PORT = "19211"
-BASE_PATH = "/"
