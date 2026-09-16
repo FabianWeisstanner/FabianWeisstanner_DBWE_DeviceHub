@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>DeviceHub - Geräte</title>
 </head>
+
 <body>
 
     <h1>Geräteverwaltung</h1>
 
     <p>
-        Angemeldet als: {{ current_user.username }}
+        Angemeldet als:
+        {{ current_user.username }}
     </p>
 
     <p>
@@ -26,19 +28,130 @@
         </a>
     </p>
 
+
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul>
                 {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <li>
+                        {{ message }}
+                    </li>
                 {% endfor %}
             </ul>
         {% endif %}
     {% endwith %}
 
+
+    <h2>Suche und Filter</h2>
+
+    <form
+        method="GET"
+        action="{{ url_for('devices') }}"
+    >
+
+        <label for="search">
+            Suche
+        </label>
+
+        <input
+            type="text"
+            id="search"
+            name="search"
+            value="{{ search }}"
+            placeholder="Name, Seriennummer, Hersteller..."
+        >
+
+        <br><br>
+
+
+        <label for="status">
+            Status
+        </label>
+
+        <select
+            id="status"
+            name="status"
+        >
+            <option value="">
+                Alle
+            </option>
+
+            <option
+                value="Active"
+                {% if status_filter == "Active" %}
+                    selected
+                {% endif %}
+            >
+                Active
+            </option>
+
+            <option
+                value="In Stock"
+                {% if status_filter == "In Stock" %}
+                    selected
+                {% endif %}
+            >
+                In Stock
+            </option>
+
+            <option
+                value="Repair"
+                {% if status_filter == "Repair" %}
+                    selected
+                {% endif %}
+            >
+                Repair
+            </option>
+
+            <option
+                value="Retired"
+                {% if status_filter == "Retired" %}
+                    selected
+                {% endif %}
+            >
+                Retired
+            </option>
+        </select>
+
+        <br><br>
+
+
+        <label for="operating_system">
+            Betriebssystem
+        </label>
+
+        <input
+            type="text"
+            id="operating_system"
+            name="operating_system"
+            value="{{ os_filter }}"
+            placeholder="z.B. Windows 11"
+        >
+
+        <br><br>
+
+
+        <button type="submit">
+            Suchen / Filtern
+        </button>
+
+        <a href="{{ url_for('devices') }}">
+            Filter zurücksetzen
+        </a>
+
+    </form>
+
+
+    <hr>
+
+
     {% if devices %}
 
-        <table border="1" cellpadding="8">
+        <table
+            border="1"
+            cellpadding="8"
+        >
+
             <thead>
                 <tr>
                     <th>ID</th>
@@ -54,9 +167,13 @@
                 </tr>
             </thead>
 
+
             <tbody>
+
                 {% for device in devices %}
+
                     <tr>
+
                         <td>
                             {{ device.id }}
                         </td>
@@ -94,6 +211,7 @@
                         </td>
 
                         <td>
+
                             <a
                                 href="{{ url_for(
                                     'edit_device',
@@ -116,20 +234,27 @@
                                     'Soll dieses Gerät wirklich gelöscht werden?'
                                 );"
                             >
+
                                 <button type="submit">
                                     Löschen
                                 </button>
+
                             </form>
+
                         </td>
+
                     </tr>
+
                 {% endfor %}
+
             </tbody>
+
         </table>
 
     {% else %}
 
         <p>
-            Noch keine Geräte vorhanden.
+            Keine passenden Geräte gefunden.
         </p>
 
     {% endif %}

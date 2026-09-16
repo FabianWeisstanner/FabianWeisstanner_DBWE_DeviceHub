@@ -17,7 +17,7 @@ from flask_login import (
             current_user,
         )
 
-from sqlalchemy import text
+from sqlalchemy import text, or_
 
 from extensions import db
 from models import User, Device
@@ -213,14 +213,59 @@ def logout():
 @app.get("/devices")
 @login_required
 def devices():
-        all_devices = Device.query.order_by(
-            Device.created_at.desc()
-        ).all()
+    search = request.args.get(
+        "search",
+        ""
+    ).strip()
 
-        return render_template(
-            "devices.html",
-            devices=all_devices
+    status_filter = request.args.get(
+        "status",
+        ""
+    ).strip()
+
+    os_filter = request.args.get(
+        "operating_system",
+        ""
+    ).strip()
+
+    query = Device.query
+
+    if search:
+        search_pattern = f"%{search}%"
+
+        query = query.filter(
+            or_(
+                Device.device_name.ilike(search_pattern),
+                Device.serial_number.ilike(search_pattern),
+                Device.manufacturer.ilike(search_pattern),
+                Device.model.ilike(search_pattern),
+                Device.owner.ilike(search_pattern)
+            )
         )
+
+    if status_filter:
+        query = query.filter(
+            Device.status == status_filter
+        )
+
+    if os_filter:
+        query = query.filter(
+            Device.operating_system.ilike(
+                f"%{os_filter}%"
+            )
+        )
+
+    all_devices = query.order_by(
+        Device.created_at.desc()
+    ).all()
+
+    return render_template(
+        "devices.html",
+        devices=all_devices,
+        search=search,
+        status_filter=status_filter,
+        os_filter=os_filter
+    )
 
 @app.route("/devices/add", methods=["GET", "POST"])
 @login_required
