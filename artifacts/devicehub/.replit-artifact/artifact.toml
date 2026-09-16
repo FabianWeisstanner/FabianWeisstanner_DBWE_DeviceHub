@@ -12,10 +12,10 @@ paths = [ "/" ]
 localPort = 19211
 
 [services.development]
-run = "python3 ../../app.py"
+run = "gunicorn --bind 0.0.0.0:19211 app:app"
 
 [services.production]
-run = "python3 ../../app.py"
+run = "gunicorn --bind 0.0.0.0:19211 app:app"
 
 [services.env]
 PORT = "19211"

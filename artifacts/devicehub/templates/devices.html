@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+
+{% block title %}
+    DeviceHub - Geräte
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h1>
+            Geräteverwaltung
+        </h1>
+
+        <p class="text-muted mb-0">
+            Geräte suchen, filtern und verwalten.
+        </p>
+
+    </div>
+
+    <a
+        href="{{ url_for('add_device') }}"
+        class="btn btn-primary"
+    >
+        + Neues Gerät
+    </a>
+
+</div>
+
+
+<div class="card p-4 mb-4">
+
+    <form
+        method="GET"
+        action="{{ url_for('devices') }}"
+    >
+
+        <div class="row g-3">
+
+            <div class="col-lg-5">
+
+                <label
+                    for="search"
+                    class="form-label"
+                >
+                    Suche
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    id="search"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Name, Seriennummer, Hersteller..."
+                >
+
+            </div>
+
+
+            <div class="col-lg-3">
+
+                <label
+                    for="status"
+                    class="form-label"
+                >
+                    Status
+                </label>
+
+                <select
+                    class="form-select"
+                    id="status"
+                    name="status"
+                >
+
+                    <option value="">
+                        Alle
+                    </option>
+
+                    <option
+                        value="Active"
+                        {% if status_filter == "Active" %}
+                            selected
+                        {% endif %}
+                    >
+                        Active
+                    </option>
+
+                    <option
+                        value="In Stock"
+                        {% if status_filter == "In Stock" %}
+                            selected
+                        {% endif %}
+                    >
+                        In Stock
+                    </option>
+
+                    <option
+                        value="Repair"
+                        {% if status_filter == "Repair" %}
+                            selected
+                        {% endif %}
+                    >
+                        Repair
+                    </option>
+
+                    <option
+                        value="Retired"
+                        {% if status_filter == "Retired" %}
+                            selected
+                        {% endif %}
+                    >
+                        Retired
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <label
+                    for="operating_system"
+                    class="form-label"
+                >
+                    Betriebssystem
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    id="operating_system"
+                    name="operating_system"
+                    value="{{ os_filter }}"
+                    placeholder="z.B. Windows 11"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="mt-3">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Suchen
+            </button>
+
+            <a
+                href="{{ url_for('devices') }}"
+                class="btn btn-outline-secondary"
+            >
+                Zurücksetzen
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<div class="card">
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead class="table-light">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Gerät</th>
+                    <th>Hersteller</th>
+                    <th>Modell</th>
+                    <th>Seriennummer</th>
+                    <th>OS</th>
+                    <th>Typ</th>
+                    <th>Besitzer</th>
+                    <th>Status</th>
+                    <th>Aktionen</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for device in devices %}
+
+                    <tr>
+
+                        <td>
+                            {{ device.id }}
+                        </td>
+
+                        <td class="fw-semibold">
+                            {{ device.device_name }}
+                        </td>
+
+                        <td>
+                            {{ device.manufacturer or "-" }}
+                        </td>
+
+                        <td>
+                            {{ device.model or "-" }}
+                        </td>
+
+                        <td>
+                            {{ device.serial_number }}
+                        </td>
+
+                        <td>
+                            {{ device.operating_system or "-" }}
+                        </td>
+
+                        <td>
+                            {{ device.device_type or "-" }}
+                        </td>
+
+                        <td>
+                            {{ device.owner or "-" }}
+                        </td>
+
+                        <td>
+
+                            {% if device.status == "Active" %}
+
+                                <span class="badge text-bg-success">
+                                    Active
+                                </span>
+
+                            {% elif device.status == "In Stock" %}
+
+                                <span class="badge text-bg-primary">
+                                    In Stock
+                                </span>
+
+                            {% elif device.status == "Repair" %}
+
+                                <span class="badge text-bg-warning">
+                                    Repair
+                                </span>
+
+                            {% elif device.status == "Retired" %}
+
+                                <span class="badge text-bg-secondary">
+                                    Retired
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge text-bg-light">
+                                    {{ device.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td class="text-nowrap">
+
+                            <a
+                                href="{{ url_for(
+                                    'edit_device',
+                                    device_id=device.id
+                                ) }}"
+                                class="btn btn-sm btn-outline-primary"
+                            >
+                                Bearbeiten
+                            </a>
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'delete_device',
+                                    device_id=device.id
+                                ) }}"
+                                class="d-inline"
+                                onsubmit="return confirm(
+                                    'Soll dieses Gerät wirklich gelöscht werden?'
+                                );"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="csrf_token"
+                                    value="{{ csrf_token() }}"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-outline-danger"
+                                >
+                                    Löschen
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="10"
+                            class="text-center text-muted py-5"
+                        >
+                            Keine passenden Geräte gefunden.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
