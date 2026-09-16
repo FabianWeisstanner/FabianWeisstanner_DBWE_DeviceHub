@@ -210,6 +210,18 @@ def logout():
                 url_for("login")
             )
 
+@app.get("/devices")
+@login_required
+def devices():
+        all_devices = Device.query.order_by(
+            Device.created_at.desc()
+        ).all()
+
+        return render_template(
+            "devices.html",
+            devices=all_devices
+        )
+
 
 if __name__ == "__main__":
             port = int(
