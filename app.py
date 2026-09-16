@@ -418,6 +418,20 @@ def edit_device(device_id):
             device=device
         )
 
+@app.post("/devices/<int:device_id>/delete")
+@login_required
+def delete_device(device_id):
+        device = Device.query.get_or_404(device_id)
+
+        db.session.delete(device)
+        db.session.commit()
+
+        flash("Gerät wurde erfolgreich gelöscht.")
+
+        return redirect(
+            url_for("devices")
+        )
+
 
 if __name__ == "__main__":
             port = int(

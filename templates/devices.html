@@ -102,6 +102,24 @@
                             >
                                 Bearbeiten
                             </a>
+
+                            |
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'delete_device',
+                                    device_id=device.id
+                                ) }}"
+                                style="display: inline;"
+                                onsubmit="return confirm(
+                                    'Soll dieses Gerät wirklich gelöscht werden?'
+                                );"
+                            >
+                                <button type="submit">
+                                    Löschen
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 {% endfor %}
