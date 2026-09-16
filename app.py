@@ -191,10 +191,32 @@ def login():
 @app.get("/dashboard")
 @login_required
 def dashboard():
-            return (
-                f"Willkommen im DeviceHub, "
-                f"{current_user.username}!"
-            )
+    total_devices = Device.query.count()
+
+    active_devices = Device.query.filter_by(
+        status="Active"
+    ).count()
+
+    in_stock_devices = Device.query.filter_by(
+        status="In Stock"
+    ).count()
+
+    repair_devices = Device.query.filter_by(
+        status="Repair"
+    ).count()
+
+    retired_devices = Device.query.filter_by(
+        status="Retired"
+    ).count()
+
+    return render_template(
+        "dashboard.html",
+        total_devices=total_devices,
+        active_devices=active_devices,
+        in_stock_devices=in_stock_devices,
+        repair_devices=repair_devices,
+        retired_devices=retired_devices
+    )
 
 
 @app.get("/logout")

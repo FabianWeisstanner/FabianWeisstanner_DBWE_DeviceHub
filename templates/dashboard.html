@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>DeviceHub - Dashboard</title>
+</head>
+
+<body>
+
+    <h1>DeviceHub Dashboard</h1>
+
+    <p>
+        Willkommen, {{ current_user.username }}
+    </p>
+
+    <p>
+        <a href="{{ url_for('devices') }}">
+            Geräteverwaltung
+        </a>
+        |
+        <a href="{{ url_for('add_device') }}">
+            Neues Gerät erfassen
+        </a>
+        |
+        <a href="{{ url_for('logout') }}">
+            Abmelden
+        </a>
+    </p>
+
+
+    <hr>
+
+
+    <h2>Geräteübersicht</h2>
+
+
+    <div>
+        <h3>Gesamt</h3>
+        <p>
+            {{ total_devices }}
+        </p>
+    </div>
+
+
+    <div>
+        <h3>Active</h3>
+        <p>
+            {{ active_devices }}
+        </p>
+    </div>
+
+
+    <div>
+        <h3>In Stock</h3>
+        <p>
+            {{ in_stock_devices }}
+        </p>
+    </div>
+
+
+    <div>
+        <h3>Repair</h3>
+        <p>
+            {{ repair_devices }}
+        </p>
+    </div>
+
+
+    <div>
+        <h3>Retired</h3>
+        <p>
+            {{ retired_devices }}
+        </p>
+    </div>
+
+</body>
+</html>
