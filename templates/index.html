@@ -1,13 +1,64 @@
-<!doctype html>
-<html lang="de">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DeviceHub</title>
-  </head>
-  <body>
-    <main>
-      <h1>DeviceHub läuft</h1>
-    </main>
-  </body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+    DeviceHub
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="card p-5 text-center">
+
+            <h1 class="display-5 fw-bold">
+                DeviceHub
+            </h1>
+
+            <p class="lead text-muted mt-3">
+                Zentrale Verwaltung von IT-Geräten.
+            </p>
+
+            {% if current_user.is_authenticated %}
+
+                <div class="mt-4">
+
+                    <a
+                        href="{{ url_for('dashboard') }}"
+                        class="btn btn-primary btn-lg"
+                    >
+                        Zum Dashboard
+                    </a>
+
+                </div>
+
+            {% else %}
+
+                <div class="mt-4">
+
+                    <a
+                        href="{{ url_for('login') }}"
+                        class="btn btn-primary me-2"
+                    >
+                        Anmelden
+                    </a>
+
+                    <a
+                        href="{{ url_for('register') }}"
+                        class="btn btn-outline-secondary"
+                    >
+                        Registrieren
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

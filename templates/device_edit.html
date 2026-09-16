@@ -1,211 +1,257 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>DeviceHub - Gerät bearbeiten</title>
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block title %}
+    DeviceHub - Gerät bearbeiten
+{% endblock %}
 
-    <h1>Gerät bearbeiten</h1>
+{% block content %}
 
+<div class="row justify-content-center">
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>
-                        {{ message }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+    <div class="col-lg-8">
 
+        <div class="card p-4">
 
-    <form method="POST">
+            <h2 class="mb-4">
+                Gerät bearbeiten
+            </h2>
 
-        <input
-            type="hidden"
-            name="csrf_token"
-            value="{{ csrf_token() }}"
-        >
+            <form method="POST">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
 
 
-        <label for="device_name">
-            Gerätename *
-        </label>
-        <br>
+                <div class="row">
 
-        <input
-            type="text"
-            id="device_name"
-            name="device_name"
-            value="{{ device.device_name }}"
-            required
-        >
+                    <div class="col-md-6 mb-3">
 
-        <br><br>
+                        <label
+                            class="form-label"
+                            for="device_name"
+                        >
+                            Gerätename *
+                        </label>
 
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="device_name"
+                            name="device_name"
+                            value="{{ device.device_name }}"
+                            required
+                        >
 
-        <label for="manufacturer">
-            Hersteller
-        </label>
-        <br>
-
-        <input
-            type="text"
-            id="manufacturer"
-            name="manufacturer"
-            value="{{ device.manufacturer or '' }}"
-        >
-
-        <br><br>
+                    </div>
 
 
-        <label for="model">
-            Modell
-        </label>
-        <br>
+                    <div class="col-md-6 mb-3">
 
-        <input
-            type="text"
-            id="model"
-            name="model"
-            value="{{ device.model or '' }}"
-        >
+                        <label
+                            class="form-label"
+                            for="serial_number"
+                        >
+                            Seriennummer *
+                        </label>
 
-        <br><br>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="serial_number"
+                            name="serial_number"
+                            value="{{ device.serial_number }}"
+                            required
+                        >
 
-
-        <label for="serial_number">
-            Seriennummer *
-        </label>
-        <br>
-
-        <input
-            type="text"
-            id="serial_number"
-            name="serial_number"
-            value="{{ device.serial_number }}"
-            required
-        >
-
-        <br><br>
+                    </div>
 
 
-        <label for="operating_system">
-            Betriebssystem
-        </label>
-        <br>
+                    <div class="col-md-6 mb-3">
 
-        <input
-            type="text"
-            id="operating_system"
-            name="operating_system"
-            value="{{ device.operating_system or '' }}"
-        >
+                        <label
+                            class="form-label"
+                            for="manufacturer"
+                        >
+                            Hersteller
+                        </label>
 
-        <br><br>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="manufacturer"
+                            name="manufacturer"
+                            value="{{ device.manufacturer or '' }}"
+                        >
 
-
-        <label for="device_type">
-            Gerätetyp
-        </label>
-        <br>
-
-        <input
-            type="text"
-            id="device_type"
-            name="device_type"
-            value="{{ device.device_type or '' }}"
-        >
-
-        <br><br>
+                    </div>
 
 
-        <label for="owner">
-            Besitzer
-        </label>
-        <br>
+                    <div class="col-md-6 mb-3">
 
-        <input
-            type="text"
-            id="owner"
-            name="owner"
-            value="{{ device.owner or '' }}"
-        >
+                        <label
+                            class="form-label"
+                            for="model"
+                        >
+                            Modell
+                        </label>
 
-        <br><br>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="model"
+                            name="model"
+                            value="{{ device.model or '' }}"
+                        >
 
-
-        <label for="status">
-            Status *
-        </label>
-        <br>
-
-        <select
-            id="status"
-            name="status"
-            required
-        >
-
-            <option
-                value="Active"
-                {% if device.status == "Active" %}
-                    selected
-                {% endif %}
-            >
-                Active
-            </option>
+                    </div>
 
 
-            <option
-                value="In Stock"
-                {% if device.status == "In Stock" %}
-                    selected
-                {% endif %}
-            >
-                In Stock
-            </option>
+                    <div class="col-md-6 mb-3">
+
+                        <label
+                            class="form-label"
+                            for="operating_system"
+                        >
+                            Betriebssystem
+                        </label>
+
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="operating_system"
+                            name="operating_system"
+                            value="{{ device.operating_system or '' }}"
+                        >
+
+                    </div>
 
 
-            <option
-                value="Repair"
-                {% if device.status == "Repair" %}
-                    selected
-                {% endif %}
-            >
-                Repair
-            </option>
+                    <div class="col-md-6 mb-3">
+
+                        <label
+                            class="form-label"
+                            for="device_type"
+                        >
+                            Gerätetyp
+                        </label>
+
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="device_type"
+                            name="device_type"
+                            value="{{ device.device_type or '' }}"
+                        >
+
+                    </div>
 
 
-            <option
-                value="Retired"
-                {% if device.status == "Retired" %}
-                    selected
-                {% endif %}
-            >
-                Retired
-            </option>
+                    <div class="col-md-6 mb-3">
 
-        </select>
+                        <label
+                            class="form-label"
+                            for="owner"
+                        >
+                            Besitzer
+                        </label>
 
-        <br><br>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="owner"
+                            name="owner"
+                            value="{{ device.owner or '' }}"
+                        >
+
+                    </div>
 
 
-        <button type="submit">
-            Änderungen speichern
-        </button>
+                    <div class="col-md-6 mb-3">
 
-    </form>
+                        <label
+                            class="form-label"
+                            for="status"
+                        >
+                            Status *
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="status"
+                            name="status"
+                            required
+                        >
+
+                            <option
+                                value="Active"
+                                {% if device.status == "Active" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Active
+                            </option>
+
+                            <option
+                                value="In Stock"
+                                {% if device.status == "In Stock" %}
+                                    selected
+                                {% endif %}
+                            >
+                                In Stock
+                            </option>
+
+                            <option
+                                value="Repair"
+                                {% if device.status == "Repair" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Repair
+                            </option>
+
+                            <option
+                                value="Retired"
+                                {% if device.status == "Retired" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Retired
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
 
 
-    <br>
+                <div class="mt-3">
 
-    <a href="{{ url_for('devices') }}">
-        Zurück zur Geräteübersicht
-    </a>
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Änderungen speichern
+                    </button>
 
-</body>
-</html>
+                    <a
+                        href="{{ url_for('devices') }}"
+                        class="btn btn-outline-secondary"
+                    >
+                        Abbrechen
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

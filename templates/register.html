@@ -1,95 +1,117 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>DeviceHub - Registrierung</title>
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block title %}
+    DeviceHub - Registrierung
+{% endblock %}
 
-    <h1>Registrierung</h1>
+{% block content %}
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>
-                        {{ message }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+<div class="row justify-content-center">
 
+    <div class="col-md-6 col-lg-5">
 
-    <form method="POST">
+        <div class="card p-4">
 
-        <input
-            type="hidden"
-            name="csrf_token"
-            value="{{ csrf_token() }}"
-        >
+            <h2 class="mb-4">
+                Registrierung
+            </h2>
+
+            <form method="POST">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
 
 
-        <label for="username">
-            Benutzername
-        </label>
-        <br>
+                <div class="mb-3">
 
-        <input
-            type="text"
-            id="username"
-            name="username"
-            required
-        >
+                    <label
+                        for="username"
+                        class="form-label"
+                    >
+                        Benutzername
+                    </label>
 
-        <br><br>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="username"
+                        name="username"
+                        required
+                    >
 
-
-        <label for="email">
-            E-Mail-Adresse
-        </label>
-        <br>
-
-        <input
-            type="email"
-            id="email"
-            name="email"
-            required
-        >
-
-        <br><br>
+                </div>
 
 
-        <label for="password">
-            Passwort
-        </label>
-        <br>
+                <div class="mb-3">
 
-        <input
-            type="password"
-            id="password"
-            name="password"
-            required
-        >
+                    <label
+                        for="email"
+                        class="form-label"
+                    >
+                        E-Mail-Adresse
+                    </label>
 
-        <br><br>
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        required
+                    >
 
-
-        <button type="submit">
-            Registrieren
-        </button>
-
-    </form>
+                </div>
 
 
-    <p>
-        Bereits registriert?
+                <div class="mb-3">
 
-        <a href="{{ url_for('login') }}">
-            Zur Anmeldung
-        </a>
-    </p>
+                    <label
+                        for="password"
+                        class="form-label"
+                    >
+                        Passwort
+                    </label>
 
-</body>
-</html>
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        name="password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary w-100"
+                >
+                    Registrieren
+                </button>
+
+            </form>
+
+
+            <hr>
+
+
+            <p class="text-center mb-0">
+
+                Bereits registriert?
+
+                <a href="{{ url_for('login') }}">
+                    Zur Anmeldung
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

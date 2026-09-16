@@ -1,185 +1,234 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>DeviceHub - Gerät erfassen</title>
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block title %}
+    DeviceHub - Gerät erfassen
+{% endblock %}
 
-    <h1>Neues Gerät erfassen</h1>
+{% block content %}
 
+<div class="row justify-content-center">
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>
-                        {{ message }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+    <div class="col-lg-8">
 
+        <div class="card p-4">
 
-    <form method="POST">
+            <h2 class="mb-4">
+                Neues Gerät erfassen
+            </h2>
 
-        <input
-            type="hidden"
-            name="csrf_token"
-            value="{{ csrf_token() }}"
-        >
+            <form method="POST">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
 
 
-        <label for="device_name">
-            Gerätename *
-        </label>
-        <br>
+                <div class="row">
 
-        <input
-            type="text"
-            id="device_name"
-            name="device_name"
-            required
-        >
+                    <div class="col-md-6 mb-3">
 
-        <br><br>
+                        <label
+                            class="form-label"
+                            for="device_name"
+                        >
+                            Gerätename *
+                        </label>
 
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="device_name"
+                            name="device_name"
+                            required
+                        >
 
-        <label for="manufacturer">
-            Hersteller
-        </label>
-        <br>
-
-        <input
-            type="text"
-            id="manufacturer"
-            name="manufacturer"
-        >
-
-        <br><br>
+                    </div>
 
 
-        <label for="model">
-            Modell
-        </label>
-        <br>
+                    <div class="col-md-6 mb-3">
 
-        <input
-            type="text"
-            id="model"
-            name="model"
-        >
+                        <label
+                            class="form-label"
+                            for="serial_number"
+                        >
+                            Seriennummer *
+                        </label>
 
-        <br><br>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="serial_number"
+                            name="serial_number"
+                            required
+                        >
 
-
-        <label for="serial_number">
-            Seriennummer *
-        </label>
-        <br>
-
-        <input
-            type="text"
-            id="serial_number"
-            name="serial_number"
-            required
-        >
-
-        <br><br>
+                    </div>
 
 
-        <label for="operating_system">
-            Betriebssystem
-        </label>
-        <br>
+                    <div class="col-md-6 mb-3">
 
-        <input
-            type="text"
-            id="operating_system"
-            name="operating_system"
-        >
+                        <label
+                            class="form-label"
+                            for="manufacturer"
+                        >
+                            Hersteller
+                        </label>
 
-        <br><br>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="manufacturer"
+                            name="manufacturer"
+                        >
 
-
-        <label for="device_type">
-            Gerätetyp
-        </label>
-        <br>
-
-        <input
-            type="text"
-            id="device_type"
-            name="device_type"
-        >
-
-        <br><br>
+                    </div>
 
 
-        <label for="owner">
-            Besitzer
-        </label>
-        <br>
+                    <div class="col-md-6 mb-3">
 
-        <input
-            type="text"
-            id="owner"
-            name="owner"
-        >
+                        <label
+                            class="form-label"
+                            for="model"
+                        >
+                            Modell
+                        </label>
 
-        <br><br>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="model"
+                            name="model"
+                        >
 
-
-        <label for="status">
-            Status *
-        </label>
-        <br>
-
-        <select
-            id="status"
-            name="status"
-            required
-        >
-
-            <option value="">
-                Bitte auswählen
-            </option>
-
-            <option value="Active">
-                Active
-            </option>
-
-            <option value="In Stock">
-                In Stock
-            </option>
-
-            <option value="Repair">
-                Repair
-            </option>
-
-            <option value="Retired">
-                Retired
-            </option>
-
-        </select>
-
-        <br><br>
+                    </div>
 
 
-        <button type="submit">
-            Gerät speichern
-        </button>
+                    <div class="col-md-6 mb-3">
 
-    </form>
+                        <label
+                            class="form-label"
+                            for="operating_system"
+                        >
+                            Betriebssystem
+                        </label>
+
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="operating_system"
+                            name="operating_system"
+                        >
+
+                    </div>
 
 
-    <br>
+                    <div class="col-md-6 mb-3">
 
-    <a href="{{ url_for('devices') }}">
-        Zurück zur Geräteübersicht
-    </a>
+                        <label
+                            class="form-label"
+                            for="device_type"
+                        >
+                            Gerätetyp
+                        </label>
 
-</body>
-</html>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="device_type"
+                            name="device_type"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <label
+                            class="form-label"
+                            for="owner"
+                        >
+                            Besitzer
+                        </label>
+
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="owner"
+                            name="owner"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <label
+                            class="form-label"
+                            for="status"
+                        >
+                            Status *
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="status"
+                            name="status"
+                            required
+                        >
+
+                            <option value="">
+                                Bitte auswählen
+                            </option>
+
+                            <option value="Active">
+                                Active
+                            </option>
+
+                            <option value="In Stock">
+                                In Stock
+                            </option>
+
+                            <option value="Repair">
+                                Repair
+                            </option>
+
+                            <option value="Retired">
+                                Retired
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mt-3">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Gerät speichern
+                    </button>
+
+                    <a
+                        href="{{ url_for('devices') }}"
+                        class="btn btn-outline-secondary"
+                    >
+                        Abbrechen
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
