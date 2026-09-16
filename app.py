@@ -2,28 +2,30 @@ import os
 from functools import wraps
 
 from flask import (
-        Flask,
-        render_template,
-        request,
-        redirect,
-        url_for,
-        flash,
-        jsonify,
-    )
+    Flask,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    flash,
+    jsonify,
+)
 
 from flask_login import (
-        LoginManager,
-        login_user,
-        logout_user,
-        login_required,
-        current_user,
-    )
+    LoginManager,
+    login_user,
+    logout_user,
+    login_required,
+    current_user,
+)
+
+from flask_wtf.csrf import CSRFProtect
 
 from itsdangerous import (
-        URLSafeTimedSerializer,
-        BadSignature,
-        SignatureExpired,
-    )
+    URLSafeTimedSerializer,
+    BadSignature,
+    SignatureExpired,
+)
 
 from sqlalchemy import text, or_
 
@@ -49,6 +51,8 @@ app.config["SECRET_KEY"] = os.environ.get(
 
 
 db.init_app(app)
+
+csrf = CSRFProtect(app)
 
 
 login_manager = LoginManager()
@@ -650,6 +654,7 @@ def delete_device(device_id):
 
 
 @app.post("/api/auth/token")
+@csrf.exempt
 def api_auth_token():
         data = request.get_json(
             silent=True

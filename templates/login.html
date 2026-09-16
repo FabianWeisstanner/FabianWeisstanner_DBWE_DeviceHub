@@ -4,42 +4,77 @@
     <meta charset="UTF-8">
     <title>DeviceHub - Anmeldung</title>
 </head>
+
 <body>
+
     <h1>Anmeldung</h1>
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul>
                 {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <li>
+                        {{ message }}
+                    </li>
                 {% endfor %}
             </ul>
         {% endif %}
     {% endwith %}
 
+
     <form method="POST">
-        <label for="username">Benutzername</label><br>
+
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ csrf_token() }}"
+        >
+
+
+        <label for="username">
+            Benutzername
+        </label>
+        <br>
+
         <input
             type="text"
             id="username"
             name="username"
             required
-        ><br><br>
+        >
 
-        <label for="password">Passwort</label><br>
+        <br><br>
+
+
+        <label for="password">
+            Passwort
+        </label>
+        <br>
+
         <input
             type="password"
             id="password"
             name="password"
             required
-        ><br><br>
+        >
 
-        <button type="submit">Anmelden</button>
+        <br><br>
+
+
+        <button type="submit">
+            Anmelden
+        </button>
+
     </form>
+
 
     <p>
         Noch kein Konto?
-        <a href="/register">Jetzt registrieren</a>
+
+        <a href="{{ url_for('register') }}">
+            Jetzt registrieren
+        </a>
     </p>
+
 </body>
 </html>

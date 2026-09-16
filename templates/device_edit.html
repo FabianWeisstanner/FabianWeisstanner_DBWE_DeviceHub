@@ -4,23 +4,39 @@
     <meta charset="UTF-8">
     <title>DeviceHub - Gerät bearbeiten</title>
 </head>
+
 <body>
 
     <h1>Gerät bearbeiten</h1>
+
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul>
                 {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <li>
+                        {{ message }}
+                    </li>
                 {% endfor %}
             </ul>
         {% endif %}
     {% endwith %}
 
+
     <form method="POST">
 
-        <label for="device_name">Gerätename *</label><br>
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ csrf_token() }}"
+        >
+
+
+        <label for="device_name">
+            Gerätename *
+        </label>
+        <br>
+
         <input
             type="text"
             id="device_name"
@@ -28,27 +44,45 @@
             value="{{ device.device_name }}"
             required
         >
+
         <br><br>
 
-        <label for="manufacturer">Hersteller</label><br>
+
+        <label for="manufacturer">
+            Hersteller
+        </label>
+        <br>
+
         <input
             type="text"
             id="manufacturer"
             name="manufacturer"
             value="{{ device.manufacturer or '' }}"
         >
+
         <br><br>
 
-        <label for="model">Modell</label><br>
+
+        <label for="model">
+            Modell
+        </label>
+        <br>
+
         <input
             type="text"
             id="model"
             name="model"
             value="{{ device.model or '' }}"
         >
+
         <br><br>
 
-        <label for="serial_number">Seriennummer *</label><br>
+
+        <label for="serial_number">
+            Seriennummer *
+        </label>
+        <br>
+
         <input
             type="text"
             id="serial_number"
@@ -56,72 +90,109 @@
             value="{{ device.serial_number }}"
             required
         >
+
         <br><br>
 
-        <label for="operating_system">Betriebssystem</label><br>
+
+        <label for="operating_system">
+            Betriebssystem
+        </label>
+        <br>
+
         <input
             type="text"
             id="operating_system"
             name="operating_system"
             value="{{ device.operating_system or '' }}"
         >
+
         <br><br>
 
-        <label for="device_type">Gerätetyp</label><br>
+
+        <label for="device_type">
+            Gerätetyp
+        </label>
+        <br>
+
         <input
             type="text"
             id="device_type"
             name="device_type"
             value="{{ device.device_type or '' }}"
         >
+
         <br><br>
 
-        <label for="owner">Besitzer</label><br>
+
+        <label for="owner">
+            Besitzer
+        </label>
+        <br>
+
         <input
             type="text"
             id="owner"
             name="owner"
             value="{{ device.owner or '' }}"
         >
+
         <br><br>
 
-        <label for="status">Status *</label><br>
+
+        <label for="status">
+            Status *
+        </label>
+        <br>
 
         <select
             id="status"
             name="status"
             required
         >
+
             <option
                 value="Active"
-                {% if device.status == "Active" %}selected{% endif %}
+                {% if device.status == "Active" %}
+                    selected
+                {% endif %}
             >
                 Active
             </option>
 
+
             <option
                 value="In Stock"
-                {% if device.status == "In Stock" %}selected{% endif %}
+                {% if device.status == "In Stock" %}
+                    selected
+                {% endif %}
             >
                 In Stock
             </option>
 
+
             <option
                 value="Repair"
-                {% if device.status == "Repair" %}selected{% endif %}
+                {% if device.status == "Repair" %}
+                    selected
+                {% endif %}
             >
                 Repair
             </option>
 
+
             <option
                 value="Retired"
-                {% if device.status == "Retired" %}selected{% endif %}
+                {% if device.status == "Retired" %}
+                    selected
+                {% endif %}
             >
                 Retired
             </option>
+
         </select>
 
         <br><br>
+
 
         <button type="submit">
             Änderungen speichern
@@ -129,9 +200,10 @@
 
     </form>
 
+
     <br>
 
-    <a href="/devices">
+    <a href="{{ url_for('devices') }}">
         Zurück zur Geräteübersicht
     </a>
 

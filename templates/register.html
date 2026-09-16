@@ -4,35 +4,92 @@
     <meta charset="UTF-8">
     <title>DeviceHub - Registrierung</title>
 </head>
+
 <body>
+
     <h1>Registrierung</h1>
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul>
                 {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <li>
+                        {{ message }}
+                    </li>
                 {% endfor %}
             </ul>
         {% endif %}
     {% endwith %}
 
+
     <form method="POST">
-        <label for="username">Benutzername</label><br>
-        <input type="text" id="username" name="username" required><br><br>
 
-        <label for="email">E-Mail-Adresse</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ csrf_token() }}"
+        >
 
-        <label for="password">Passwort</label><br>
-        <input type="password" id="password" name="password" required><br><br>
 
-        <button type="submit">Registrieren</button>
+        <label for="username">
+            Benutzername
+        </label>
+        <br>
+
+        <input
+            type="text"
+            id="username"
+            name="username"
+            required
+        >
+
+        <br><br>
+
+
+        <label for="email">
+            E-Mail-Adresse
+        </label>
+        <br>
+
+        <input
+            type="email"
+            id="email"
+            name="email"
+            required
+        >
+
+        <br><br>
+
+
+        <label for="password">
+            Passwort
+        </label>
+        <br>
+
+        <input
+            type="password"
+            id="password"
+            name="password"
+            required
+        >
+
+        <br><br>
+
+
+        <button type="submit">
+            Registrieren
+        </button>
+
     </form>
+
 
     <p>
         Bereits registriert?
-        <a href="/login">Zur Anmeldung</a>
+
+        <a href="{{ url_for('login') }}">
+            Zur Anmeldung
+        </a>
     </p>
+
 </body>
 </html>
