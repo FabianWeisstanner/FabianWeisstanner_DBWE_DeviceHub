@@ -210,7 +210,7 @@ Beispiel:
 
 ```bash
 curl \
-  https://<DEVICEHUB-URL>/api/devices \
+  https://device-hub-fabianweisstanner.replit.app/api/devices \
   -H "Authorization: Bearer <TOKEN>"
 ```
 
@@ -232,7 +232,7 @@ Beispiel:
 
 ```bash
 curl \
-  https://<DEVICEHUB-URL>/api/devices/1 \
+  https://device-hub-fabianweisstanner.replit.app/api/devices/1 \
   -H "Authorization: Bearer <TOKEN>"
 ```
 
@@ -333,7 +333,7 @@ Die produktive Anwendung verwendet:
 
 ```text
 URL:
-<ÖFFENTLICHE-DEVICEHUB-URL>
+https://device-hub-fabianweisstanner.replit.app/
 ```
 
 Die Benutzerregistrierung ist direkt über die Weboberfläche möglich.
